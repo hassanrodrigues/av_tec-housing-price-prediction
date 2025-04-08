@@ -116,3 +116,15 @@ curl -X POST "http://127.0.0.1:8000/predict" \
 
  ### Acessar documentação(swagger)
  http://127.0.0.1:8000/docs
+
+
+#### Usando Docker
+Você pode containerizar a API com Docker para uma execução consistente em qualquer ambiente.
+
+1. Certifique-se de ter o Docker instalado.
+2. Construa a imagem Docker:
+   ```bash
+   docker build -t housing-price-api .
+2. Execute o container:
+3.  ```bash
+    docker run -d -p 8000:8000 housing-price-api
