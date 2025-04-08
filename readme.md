@@ -9,6 +9,9 @@ Este repositório contém um projeto de previsão de preços de imóveis utiliza
 O projeto está organizado da seguinte forma:
 - **`dataset/Housing.csv`**: Arquivo com os dados brutos utilizados no projeto.
 - **`housing_price_prediction.ipynb`**: Notebook Jupyter contendo o código completo, desde a análise exploratória até a avaliação dos modelos.
+- **`api.py`**
+- **`predict.py`**
+- **`train_housing_price_prediction.py`**
 - **`README.md`**: Este arquivo com informações sobre o projeto.
 
 ## Dataset
@@ -68,3 +71,48 @@ Algumas melhorias e expansões que podem ser exploradas no futuro:
 
 - Aplicação de **engenharia de atributos (feature engineering)** para criação de novas variáveis mais informativas.
 - Testar outros modelos de regressão como **XGBoost**, **Gradient Boosting** ou **SVR**.
+- 
+## Como Usar a API
+O projeto inclui uma API construída com **FastAPI** que permite realizar previsões de preços de imóveis em tempo real. A API utiliza os modelos treinados (`Regressão Linear` ou `Random Forest`) e retorna o preço estimado com base nos dados fornecidos.
+
+### Pré-requisitos
+- Python 3.10+
+- Instale as dependências listadas no arquivo `requirements.txt`:
+  ```bash
+  pip install -r requirements.txt
+- Faça um ambiente e rode ele
+  ```bash
+  source venv/bin/activate  
+### Executando a API
+1. Certifique-se de que os modelos e scalers estão salvos no diretório model/ (gerados durante o treinamento).
+2. Certifique-se de que os modelos e scalers estão salvos no diretório model/ (gerados durante o treinamento).
+```bash
+ uvicorn api:app --host 127.0.0.1 --port 8000 --reload
+ ```
+ ou 
+```bash
+ python api.py
+ ```
+### Fazendo uma Requisição
+```bash
+curl -X POST "http://127.0.0.1:8000/predict" \
+-H "Content-Type: application/json" \
+-d '{
+    "area": 50,
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "stories": 1,
+    "mainroad": "no",
+    "guestroom": "no",
+    "basement": "yes",
+    "hotwaterheating": "no",
+    "airconditioning": "no",
+    "parking": 1,
+    "prefarea": "yes",
+    "furnishingstatus": "furnished",
+    "model_type": "rf"
+}'
+ ```
+
+ ### Acessar documentação(swagger)
+ http://127.0.0.1:8000/docs
